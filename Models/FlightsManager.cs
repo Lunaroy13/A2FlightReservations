@@ -8,13 +8,17 @@ namespace A2FlightReservations.Models
 {
     public static class FlightsManager
     {
-
+        //relative path for flights.csv
         public static string FLIGHTCSVPATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\CSVFiles\flights.csv");
 
+
+        //Creates a list of flight objects from flights.csv
         static List<Flight> flights = new List<Flight>(PopulateFlights());
 
+        //returns whole list of flights
         public static List<Flight> GetFlights() { return flights; }
 
+        //given departing airport, arriving airport, and day. returns a list of flight objects that match those critiria
         public static List<Flight> SearchFlights(string departing, string arriving, string day) {
 
             List<Flight> validFlights = new List<Flight>();
@@ -28,6 +32,7 @@ namespace A2FlightReservations.Models
             return validFlights;
         }
 
+        //creates flight objects from csv and returns a list of all flights
         private static List<Flight> PopulateFlights()
         {
             List<Flight> myFlights = new List<Flight>();

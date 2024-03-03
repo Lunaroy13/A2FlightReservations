@@ -32,7 +32,7 @@ public partial class Flights : ContentPage
     {
         // This is the method attached to them clicking on "Find Flights" after they entered the flight details.
 
-        // TODO return list of flights based on inputted data
+        // takes strings from entry feilds and passes them into SearchFlights
         var flights = new List<Flight>(FlightsManager.SearchFlights(entryFrom.Text,entryTo.Text,entryDay.Text));
         pickerFlight.ItemsSource = flights;
     }
