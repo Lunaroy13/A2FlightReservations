@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="A2FlightReservations.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:A2FlightReservations"
+    xmlns:views="clr-namespace:A2FlightReservations.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Title="A2FlightReservations">
+
+    <ShellContent
+        Title="Traveless"
+        ContentTemplate="{DataTemplate views:MainPage}"
+        Route="MainPage" />
+</Shell>
