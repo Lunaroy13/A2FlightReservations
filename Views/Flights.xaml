@@ -58,12 +58,11 @@
                HorizontalOptions="Center"/>
 
             <Picker x:Name="pickerFlight"
+                SelectedIndexChanged="pickerFlight_SelectedIndexChanged"
                 Title="Available Flights"
                 ItemsSource="{Binding Flights}"
                 ItemDisplayBinding="{Binding FlightCode}">
                 <!-- This is just a placeholder information to test the - Picker tag - and how it could work once we implement functionality-->
-                
-
 
             </Picker>
 
