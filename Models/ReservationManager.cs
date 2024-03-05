@@ -138,6 +138,22 @@ namespace A2FlightReservations.Models
             return foundReservations;
         }
 
+        /// Overwrites csv file with current data
+        public static void persist() {
+            foreach (Reservation reservation in _reservations) {
+                try
+                {
+                    // Creates file, or overwrites all data
+                    using StreamWriter sw = File.CreateText(RESERVATIONCSVPATH);
+                    sw.WriteLine(formatForFile(reservation));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Exception: " + ex.Message);
+                }
+            }
+        }
+
         private static string formatForFile(Reservation reservation)
         {
             string output = "";
