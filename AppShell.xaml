@@ -11,28 +11,42 @@
     Shell.TitleColor="White"
     Title="A2FlightReservations">
 
-    <FlyoutItem Title="Menu" FlyoutDisplayOptions="AsMultipleItems" FlyoutIcon="home_icon.png">
+    <Shell.FlyoutHeader>
+        <Grid ColumnDefinitions="Auto,*" Padding="20">
+            <Image Source="airplain_mark.png"
+                   Grid.Column="0"
+                   Aspect="AspectFill"
+                   HeightRequest="50"/>
+            <Label Grid.Column="1"
+                   Text="Traveless"
+                   FontAttributes="Bold"
+                   FontSize="Subtitle"
+                   Padding="20"
+                   VerticalOptions="Center"/>
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <FlyoutItem Title="MainPage" FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent
-        Title="Home"
-        Icon="home_icon.png"
-        ContentTemplate="{DataTemplate views:MainPage}"
-        Route="MainPage" />
+            Title="Home"
+            Icon="home_icon.png"
+            ContentTemplate="{DataTemplate views:MainPage}"
+            Route="MainPage" />
     </FlyoutItem>
 
     <FlyoutItem Title="Flights" FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent
-        Title="Flights"
-        Icon="airplane_icon.png"
-        ContentTemplate="{DataTemplate views:Flights}"
-        Route="Flights" />
+            Title="Flights"
+            Icon="airplane_icon.png"
+            ContentTemplate="{DataTemplate views:Flights}"
+            Route="Flights" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Home" FlyoutDisplayOptions="AsMultipleItems">
+    <FlyoutItem Title="Reservations" FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent
-        Title="Reservations"
-        Icon="event_icon.png"
-        ContentTemplate="{DataTemplate views:Reservations}"
-        Route="Reservations" />
-        
+            Title="Reservations"
+            Icon="event_icon.png"
+            ContentTemplate="{DataTemplate views:Reservations}"
+            Route="Reservations" />
     </FlyoutItem>
 </Shell>
