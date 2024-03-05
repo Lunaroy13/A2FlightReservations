@@ -2,39 +2,45 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="A2FlightReservations.Views.MainPage"
-             Title="">
+             Title="Traveless"
+             BackgroundColor="#efefef">
+    <ContentPage.Background>
+        <Color>#efefef</Color>
+    </ContentPage.Background>
+
+
     <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <!-- This could have an airplane image-->
+
+        <VerticalStackLayout Grid.Column="1" Spacing="25" Padding="50" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <Image
-                Source="dotnet_bot.png"
-                HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a race car number eight"/>
+                    Source="airplain_mark.png"
+                    HeightRequest="185"
+                    Aspect="AspectFit"
+                    SemanticProperties.Description="dot net bot in a race car number eight"/>
 
             <Label
-                Text="Welcome to Traveless"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1"/>
+                    Text="Welcome to Traveless"
+                    Style="{StaticResource Headline}"
+                    SemanticProperties.HeadingLevel="Level1"/>
 
             <Label
-                Text="Welcome to our new flight reservation App!"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"/>
+                    Text="Welcome to our new flight reservation App!"
+                    Style="{StaticResource SubHeadline}"
+                    SemanticProperties.HeadingLevel="Level2"/>
 
             <Button
-                Text="Book your flight here!" 
-                Clicked="BookFlight"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"></Button>
+                    Text="Book your flight here!" 
+                    Clicked="BookFlight"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    BackgroundColor="#FF5555"/>
 
             <Button
-                Text="View reserved flights here!" 
-                Clicked="ViewReservations"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"></Button>
+                    Text="View reserved flights here!" 
+                    Clicked="ViewReservations"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    BackgroundColor="#004B75"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

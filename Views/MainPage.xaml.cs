@@ -7,6 +7,7 @@ public partial class MainPage : ContentPage
         InitializeComponent();
     }
 
+
     private void BookFlight(object sender, EventArgs e)
     {
         // This is the "Book your flight here!" button
