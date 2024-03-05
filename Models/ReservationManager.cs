@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 
 
 namespace A2FlightReservations.Models
@@ -10,10 +11,10 @@ namespace A2FlightReservations.Models
     public static class ReservationManager
     {
 
-        public static string RESERVATIONCSVPATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\CSVFiles\reservations.csv");
+        private static string RESERVATIONCSVPATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\CSVFiles\reservations.csv");
 
         //Creates a list of flight objects from flights.csv
-        static List<Reservation> reservations = new List<Reservation>(PopulateReservations());
+        private static List<Reservation> _reservations = new List<Reservation>(PopulateReservations());
 
         private static List<Reservation> PopulateReservations()
         {
@@ -34,7 +35,15 @@ namespace A2FlightReservations.Models
                     string name = sLine[5];
                     string citizenship = sLine[6];
 
-                    Reservation newReservation = new Reservation { FlightCode = flightCode, Airline = airline, Day = day, Time = time, Cost = cost, Name = name, Citizenship = citizenship};
+                    Reservation newReservation = new Reservation { 
+                        FlightCode = flightCode, 
+                        Airline = airline, 
+                        Day = day, 
+                        Time = time, 
+                        Cost = cost, 
+                        Name = name, 
+                        Citizenship = citizenship
+                    };
                     myReservations.Add(newReservation);
                     line = sr.ReadLine();
                 }
@@ -48,28 +57,38 @@ namespace A2FlightReservations.Models
 
         }
 
-        public static void MakeReservation(Flight flight, string name, string citizenship)
+        public static void makeReservation(Flight flight, string name, string citizenship)
         {
-
-            if (name.Trim() == "")
+            // Check if name is null or empty
+            if (string.IsNullOrWhiteSpace(name))
             {
-                //TODO throw exception
+                throw new Exception("Error making reservation, the given name is empty");
             }
-            else if (citizenship.Trim() == "")
+            // Check if citizenship is null or empty
+            if (string.IsNullOrWhiteSpace(citizenship))
             {
-                //TODO throw exception
+                throw new Exception("Error making reservation, the given citizenship is empty");
             }
-            else if (flight.AvailableSeats > 0)
+            // Check that there is available space on the flight
+            if (flight.AvailableSeats > 0)
             {
                 flight.AvailableSeats--;
-                Reservation newReservation = new Reservation { FlightCode = flight.FlightCode, Airline = flight.Airline, Day = flight.Day, Time = flight.Time, Cost = flight.PricePerSeat, Name = name, Citizenship = citizenship };
+                Reservation newReservation = new Reservation { 
+                    FlightCode = flight.FlightCode, 
+                    Airline = flight.Airline,
+                    Day = flight.Day, 
+                    Time = flight.Time, 
+                    Cost = flight.PricePerSeat, 
+                    Name = name, Citizenship = citizenship 
+                };
+                
+                // Add new reservation to reservations list
+                _reservations.Add(newReservation);
 
                 try
                 {
-                    using (StreamWriter sw = File.AppendText(RESERVATIONCSVPATH))
-                    {
-                        sw.WriteLine(formatForFile(newReservation));
-                    }
+                    using StreamWriter sw = File.AppendText(RESERVATIONCSVPATH);
+                    sw.WriteLine(formatForFile(newReservation));
                 }
                 catch (Exception ex)
                 {
@@ -78,9 +97,45 @@ namespace A2FlightReservations.Models
             }
             else
             {
-                //TODO throw exception
+                throw new Exception("Error making reservation, the flight is fully booked.");
             }
             
+        }
+
+        public static List<Reservation> findReservation(string? reservationCode, string? airline, string? travellerName)
+        {
+            List<Reservation> foundReservations = new List<Reservation>();
+            
+            foreach (Reservation reservation in _reservations) {
+                // Check if a value was given for reservationCode
+                if (!string.IsNullOrWhiteSpace(reservationCode)) {
+                    // Check if reservation matches given code. Skip this reservation otherwise.
+                    if (reservationCode != reservation.ReservationCode) {
+                        continue;
+                    }
+                }
+
+                // Check if a value was given for airline
+                if (!string.IsNullOrWhiteSpace(airline)) {
+                    // Check if reservation airline matches given airline. Skip this reservation otherwise.
+                    if (airline != reservation.Airline) {
+                        continue;
+                    }
+                }
+
+                // Check if a value was given for travellerName
+                if (!string.IsNullOrWhiteSpace(travellerName)) {
+                    // Check if traveller name matches given name. Skip this reservation otherwise.
+                    if (travellerName != reservation.Name) {
+                        continue;
+                    }
+                }
+
+                // Add value to list if we get to this point.
+                foundReservations.Add(reservation);
+            }
+
+            return foundReservations;
         }
 
         private static string formatForFile(Reservation reservation)

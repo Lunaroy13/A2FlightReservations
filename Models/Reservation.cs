@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace A2FlightReservations.Models
 {
-    internal class Reservation
+    public class Reservation
     {
+        public string ReservationCode { get; set; }
         public string FlightCode { get; set; }
         public string Airline { get; set; }
         public string Day { get; set; }
