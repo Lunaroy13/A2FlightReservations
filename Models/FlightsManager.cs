@@ -22,7 +22,7 @@ namespace A2FlightReservations.Models
         //given departing airport, arriving airport, and day. returns a list of flight objects that match those critiria
         public static List<Flight> SearchFlights(string departingInput, string arrivingInput, string day) {
 
-            string departingCode = null;
+            string departingCode = "";
 
             //if the length of the departing input is 3, we assume that the user has inputted an airport code
             if (departingInput.Trim().Length == 3)
@@ -43,13 +43,13 @@ namespace A2FlightReservations.Models
                 }
 
                 //if we dont find and airport name that matches the input, search flights based on the user input
-                if(departingCode == null)
+                if(departingCode == "")
                 {
                     departingCode = departingInput.ToUpper();
                 }
             }
 
-            string arrivingCode = null;
+            string arrivingCode = "";
             //if the length of the arriving input is 3, we assume that the user has inputted an airport code
             if (arrivingInput.Trim().Length == 3)
             {
@@ -69,17 +69,17 @@ namespace A2FlightReservations.Models
                 }
 
                 //if we dont find and airport name that matches the input, search flights based on the user input
-                if (arrivingCode == null)
+                if (arrivingCode == "")
                 {
                     arrivingCode = arrivingInput.ToUpper();
                 }
             }
 
-
+            //Read every flight in flights, return a list of flights that have the same departing and arriving airports and same day
             List<Flight> validFlights = new List<Flight>();
             foreach (var flight in flights)
             {
-                if(flight.Departing == departingCode && flight.Arriving == arrivingCode && flight.Day == day)
+                if(flight.Departing == departingCode && flight.Arriving == arrivingCode && flight.Day.ToUpper() == day.ToUpper())
                 {
                     validFlights.Add(flight);
                 }
@@ -122,6 +122,7 @@ namespace A2FlightReservations.Models
 
         }
 
+        //creates airport objects from csv and returns a list of all airports
         private static List<Airport> PopulateAirports()
         {
             List<Airport> myAirports = new List<Airport>();
