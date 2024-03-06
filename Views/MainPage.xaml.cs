@@ -7,14 +7,16 @@ public partial class MainPage : ContentPage
         InitializeComponent();
     }
 
+
     private void BookFlight(object sender, EventArgs e)
     {
         // This is the "Book your flight here!" button
-        Shell.Current.GoToAsync(nameof(Flights));
+        Shell.Current.GoToAsync("//Flights");
+        
     }
 
     private void ViewReservations(object sender, EventArgs e)
     {
-        Shell.Current.GoToAsync(nameof(Reservations));
+        Shell.Current.GoToAsync("//Reservations");
     }
 }

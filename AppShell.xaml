@@ -5,11 +5,48 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:A2FlightReservations"
     xmlns:views="clr-namespace:A2FlightReservations.Views"
-    Shell.FlyoutBehavior="Disabled"
+    Shell.FlyoutBehavior="Flyout"
+    Shell.TabBarIsVisible="False"
+    BackgroundColor="#FF5555"
+    Shell.TitleColor="White"
     Title="A2FlightReservations">
 
-    <ShellContent
-        Title="Traveless"
-        ContentTemplate="{DataTemplate views:MainPage}"
-        Route="MainPage" />
+    <Shell.FlyoutHeader>
+        <Grid ColumnDefinitions="Auto,*" Padding="20">
+            <Image Source="airplain_mark.png"
+                   Grid.Column="0"
+                   Aspect="AspectFill"
+                   HeightRequest="50"/>
+            <Label Grid.Column="1"
+                   Text="Traveless"
+                   FontAttributes="Bold"
+                   FontSize="Subtitle"
+                   Padding="20"
+                   VerticalOptions="Center"/>
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <FlyoutItem Title="MainPage" FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent
+            Title="Home"
+            Icon="home_icon.png"
+            ContentTemplate="{DataTemplate views:MainPage}"
+            Route="MainPage" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Flights" FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent
+            Title="Flights"
+            Icon="airplane_icon.png"
+            ContentTemplate="{DataTemplate views:Flights}"
+            Route="Flights" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Reservations" FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent
+            Title="Reservations"
+            Icon="event_icon.png"
+            ContentTemplate="{DataTemplate views:Reservations}"
+            Route="Reservations" />
+    </FlyoutItem>
 </Shell>

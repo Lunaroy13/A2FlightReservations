@@ -2,86 +2,80 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="A2FlightReservations.Views.Flights"
-             Title="Flights">
-    <ScrollView>
-        <VerticalStackLayout Margin="10" Spacing="10">
+             Title="Flights"
+             BackgroundColor="#efefef">
 
-            <!-- Return to Home Page - Mostly for checking its UI and testing -->
-            <Button Text="Return to homepage"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"
-                Clicked="HomePageButton"></Button>
+    <ScrollView>
+        <VerticalStackLayout Grid.Column="1" Spacing="25" Padding="50" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
             <!-- Starting with the Flight finder section where the user enters their desired flight details -->
             <Label Text="Flight Finder"
-               Style="{StaticResource Headline}"
-               VerticalOptions="Center" 
-               HorizontalOptions="Center"/>
+                   Style="{StaticResource Headline}"
+                   VerticalOptions="Center" 
+                   HorizontalOptions="Center"/>
 
             <Frame Padding="10,0,10,5">
-                <HorizontalStackLayout>
-                    <Label Text="From: " HeightRequest="30" FontSize="20"></Label>
-                    <Entry x:Name="entryFrom" 
-                       Placeholder="Where are you travelling from?" 
-                       WidthRequest="300"></Entry>
-                </HorizontalStackLayout>
-            </Frame>
-
-            <Frame Padding="10,0,10,5">
-                <HorizontalStackLayout>
-                    <Label Text="To: " HeightRequest="30" FontSize="20"></Label>
-                    <Entry x:Name="entryTo" 
-                           Placeholder="Where you are travelling to?" 
+                    <HorizontalStackLayout>
+                        <Label Text="From: " HeightRequest="30" FontSize="20"></Label>
+                        <Entry x:Name="entryFrom" 
+                           Placeholder="Where are you travelling from?" 
                            WidthRequest="300"></Entry>
-                </HorizontalStackLayout>
-            </Frame>
+                    </HorizontalStackLayout>
+                </Frame>
 
-            <Frame Padding="10,0,10,5">
-                <HorizontalStackLayout>
-                    <Label Text="Day: " HeightRequest="30" FontSize="20"></Label>
-                    <Entry x:Name="entryDay" 
-                           Placeholder="What day would you want to travel?" 
-                           WidthRequest="300"></Entry>
-                </HorizontalStackLayout>
-            </Frame>
+                <Frame Padding="10,0,10,5">
+                    <HorizontalStackLayout>
+                        <Label Text="To: " HeightRequest="30" FontSize="20"></Label>
+                        <Entry x:Name="entryTo" 
+                                   Placeholder="Where you are travelling to?" 
+                                   WidthRequest="300"></Entry>
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <Frame Padding="10,0,10,5">
+                    <HorizontalStackLayout>
+                        <Label Text="Day: " HeightRequest="30" FontSize="20"></Label>
+                        <Entry x:Name="entryDay" 
+                                   Placeholder="What day would you want to travel?" 
+                                   WidthRequest="300"></Entry>
+                    </HorizontalStackLayout>
+                </Frame>
 
             <Button Text="Find Flights"
-                Clicked="ChosenFlight"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"></Button>
-
+                        Clicked="ChosenFlight"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        BackgroundColor="#FF5555"></Button>
 
             <!-- Flight options list that the user can pick from -->
             <Label Text="Flights"
-               Style="{StaticResource Headline}"
-               VerticalOptions="Center" 
-               HorizontalOptions="Center"/>
+                   Style="{StaticResource Headline}"
+                   VerticalOptions="Center" 
+                   HorizontalOptions="Center"/>
 
             <Picker x:Name="pickerFlight"
-                Title="Available Flights">
+                SelectedIndexChanged="pickerFlight_SelectedIndexChanged"
+                Title="Available Flights"
+                ItemsSource="{Binding Flights}"
+                ItemDisplayBinding="{Binding FlightCode}"    
+                FontSize="22"
+                BackgroundColor="White">
                 <!-- This is just a placeholder information to test the - Picker tag - and how it could work once we implement functionality-->
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Choose Your Flight</x:String>
-                        <x:String>Testing 1</x:String>
-                        <x:String>Testing 2</x:String>
-                        <x:String>Testing 3</x:String>
-                    </x:Array>
-                </Picker.ItemsSource>
+
             </Picker>
 
 
             <!-- Reserve Section Details-->
             <Label Text="Reserve"
-               Style="{StaticResource Headline}"
-               VerticalOptions="Center" 
-               HorizontalOptions="Center"/>
+                   Style="{StaticResource Headline}"
+                   VerticalOptions="Center" 
+                   HorizontalOptions="Center"/>
 
             <Frame Padding="10,0,10,5">
                 <HorizontalStackLayout>
                     <Label Text="Flight code: " HeightRequest="30" FontSize="20"></Label>
                     <Label x:Name="labelFlightCode" 
-                       WidthRequest="300"></Label>
+                           WidthRequest="300"></Label>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -89,7 +83,7 @@
                 <HorizontalStackLayout>
                     <Label Text="Airline: " HeightRequest="30" FontSize="20"></Label>
                     <Label x:Name="labelAirline" 
-                       WidthRequest="300"></Label>
+                           WidthRequest="300"></Label>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -97,7 +91,7 @@
                 <HorizontalStackLayout>
                     <Label Text="Day: " HeightRequest="30" FontSize="20"></Label>
                     <Label x:Name="labelDay"  
-                       WidthRequest="300"></Label>
+                           WidthRequest="300"></Label>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -105,7 +99,7 @@
                 <HorizontalStackLayout>
                     <Label Text="Time: " HeightRequest="30" FontSize="20"></Label>
                     <Label x:Name="labelTime" 
-               WidthRequest="300"></Label>
+                   WidthRequest="300"></Label>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -113,7 +107,7 @@
                 <HorizontalStackLayout>
                     <Label Text="Cost: " HeightRequest="30" FontSize="20"></Label>
                     <Label x:Name="labelCost" 
-                       WidthRequest="300"></Label>
+                           WidthRequest="300"></Label>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -121,8 +115,8 @@
                 <HorizontalStackLayout>
                     <Label Text="Name: " HeightRequest="30" FontSize="20"></Label>
                     <Entry x:Name="entryName"  
-                       Placeholder="Enter your name"
-                       WidthRequest="300"></Entry>
+                           Placeholder="Enter your name"
+                           WidthRequest="300"></Entry>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -130,26 +124,27 @@
                 <HorizontalStackLayout>
                     <Label Text="Citizenship: " HeightRequest="30" FontSize="20"></Label>
                     <Entry x:Name="entryCitizenship" 
-                       Placeholder="Enter your citizenship" 
-                       WidthRequest="300"></Entry>
+                           Placeholder="Enter your citizenship" 
+                           WidthRequest="300"></Entry>
                 </HorizontalStackLayout>
             </Frame>
 
             <Button Text="Reserve"
-                Clicked="ReservationButton" 
-                VerticalOptions="Center"
-                HorizontalOptions="Center"></Button>
+                    Clicked="ReservationButton" 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    BackgroundColor="#004B75"></Button>
 
-            
+
             <!-- Displays the reservation code to the user, maybe a new text shows up that confirms their reservation??? -->
             <Frame Padding="10,0,10,5">
                 <HorizontalStackLayout>
                     <Label Text="Reservation Code: " HeightRequest="30" FontSize="20"></Label>
                     <Label x:Name="labelCode"  
-                           WidthRequest="300"></Label>
+                               WidthRequest="300"></Label>
                 </HorizontalStackLayout>
             </Frame>
-            
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
