@@ -57,10 +57,9 @@
                 SelectedIndexChanged="pickerFlight_SelectedIndexChanged"
                 Title="Available Flights"
                 ItemsSource="{Binding Flights}"
-                ItemDisplayBinding="{Binding FlightCode}">
-                    Title="Available Flights"
-                    FontSize="22"
-                    BackgroundColor="White">
+                ItemDisplayBinding="{Binding FlightCode}"    
+                FontSize="22"
+                BackgroundColor="White">
                 <!-- This is just a placeholder information to test the - Picker tag - and how it could work once we implement functionality-->
 
             </Picker>
