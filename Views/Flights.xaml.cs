@@ -12,13 +12,15 @@ public partial class Flights : ContentPage
 
 	}
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
+    //TEST CODE
+    //UNCOMMENT TO DISPLAY ALL FLIGHTS IN PICKER. FOR DEBUG ONLY
+    //protected override void OnAppearing()
+    //{
+    //    base.OnAppearing();
        
-        var flights = new List<Flight>(FlightsManager.GetFlights());
-        pickerFlight.ItemsSource = flights;
-    }
+    //    var flights = new List<Flight>(FlightsManager.GetFlights());
+    //    pickerFlight.ItemsSource = flights;
+    //}
 
     private void HomePageButton(object sender, EventArgs e)
     {

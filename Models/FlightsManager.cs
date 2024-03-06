@@ -1,4 +1,11 @@
-﻿using System;
+﻿// 2024-03-06
+// Group 1 -> Adam Cunard, Simon Luna, Tyler Meekel, Sunhee Ku 
+// FlightsManger.cs
+// Takes in no inputs.
+// Contains logic for reading in airport and flight files
+// Also allows searching flights based on departing and arriving airports along with the day of the week
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
