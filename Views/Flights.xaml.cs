@@ -27,19 +27,18 @@ public partial class Flights : ContentPage
     }
 
     private void ChosenFlight(object sender, EventArgs e)
-    {
-        // This is the method attached to them clicking on "Find Flights" after they entered the flight details.
-
+    { 
         // takes strings from entry feilds and passes them into SearchFlights
         var flights = new List<Flight>(FlightsManager.SearchFlights(entryFrom.Text,entryTo.Text,entryDay.Text));
         pickerFlight.ItemsSource = flights;
-
-
     }
 
     private void ReservationButton(object sender, EventArgs e)
     {
         // This is the method attached to them clicking on "Reserve" after putting in the remaining details.
+        Flight selectedFlight = (Flight)pickerFlight.SelectedItem;
+        Reservation newReservation = ReservationManager.makeReservation(selectedFlight, entryName.Text, entryCitizenship.Text);
+        labelCode.Text = newReservation.ReservationCode;
     }
 
     private void pickerFlight_SelectedIndexChanged(object sender, EventArgs e)

@@ -60,8 +60,6 @@
                 ItemDisplayBinding="{Binding FlightCode}"    
                 FontSize="22"
                 BackgroundColor="White">
-                <!-- This is just a placeholder information to test the - Picker tag - and how it could work once we implement functionality-->
-
             </Picker>
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Microsoft.VisualBasic;
 
 
@@ -15,6 +16,8 @@ namespace A2FlightReservations.Models
 
         //Creates a list of flight objects from flights.csv
         private static List<Reservation> _reservations = new List<Reservation>(PopulateReservations());
+
+        public static List<Reservation> GetReservations() { return _reservations; }
 
         private static List<Reservation> PopulateReservations()
         {
@@ -57,8 +60,9 @@ namespace A2FlightReservations.Models
 
         }
 
-        public static void makeReservation(Flight flight, string name, string citizenship)
+        public static Reservation makeReservation(Flight flight, string name, string citizenship)
         {
+            Reservation newReservation;
             // Check if name is null or empty
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -73,15 +77,18 @@ namespace A2FlightReservations.Models
             if (flight.AvailableSeats > 0)
             {
                 flight.AvailableSeats--;
-                Reservation newReservation = new Reservation { 
-                    FlightCode = flight.FlightCode, 
+                newReservation = new Reservation
+                {
+                    ReservationCode = GenerateReservationCode(),
+                    FlightCode = flight.FlightCode,
                     Airline = flight.Airline,
-                    Day = flight.Day, 
-                    Time = flight.Time, 
-                    Cost = flight.PricePerSeat, 
-                    Name = name, Citizenship = citizenship 
+                    Day = flight.Day,
+                    Time = flight.Time,
+                    Cost = flight.PricePerSeat,
+                    Name = name,
+                    Citizenship = citizenship
                 };
-                
+
                 // Add new reservation to reservations list
                 _reservations.Add(newReservation);
 
@@ -99,7 +106,47 @@ namespace A2FlightReservations.Models
             {
                 throw new Exception("Error making reservation, the flight is fully booked.");
             }
+            return newReservation;
+        }
+
+        private static string GenerateReservationCode()
+        {
+            List<string> reservationCodes = [];
+
+            foreach (Reservation reservation in _reservations)
+            {
+                reservationCodes.Add(reservation.ReservationCode);
+            }
+
+            string newCode = "";
+            const string VALIDCHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string VALIDNUM = "1234567890";
+
+            var allowedCharSet = VALIDCHAR.ToArray();
+            var allowedNumSet = VALIDNUM.ToArray();
+
+            Random random = new();
             
+            while (true)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    int randomCharIndex = random.Next(0, allowedCharSet.Length);
+                    char selectedChar = allowedCharSet[randomCharIndex];
+
+                    newCode += selectedChar;
+                }
+                int randomNumIndex = random.Next(0, allowedNumSet.Length);
+                char selectedNum = allowedNumSet[randomNumIndex];
+                newCode += selectedNum;
+
+                if (!reservationCodes.Contains(newCode)) 
+                {
+                    break;
+                }
+            } 
+
+            return newCode;
         }
 
         public static List<Reservation> findReservation(string? reservationCode, string? airline, string? travellerName)

@@ -1,3 +1,6 @@
+using System.Collections.ObjectModel;
+using A2FlightReservations.Models;
+
 namespace A2FlightReservations.Views;
 
 public partial class Reservations : ContentPage
@@ -6,9 +9,17 @@ public partial class Reservations : ContentPage
 	{
 		InitializeComponent();
 	}
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        List<Reservation> reservations = new(ReservationManager.GetReservations());
+        pickerReservation.ItemsSource = reservations;
+    }
 
     private void FindReservation(object sender, EventArgs e)
     {
-		// This method is attached to the find reservations button, it should fill the array of options that the user can pick from.
+        List<Reservation> reservations = ReservationManager.findReservation(entryReservationCode.Text, entryReservationAirline.Text, entryReservationName.Text); 
+        pickerReservation.ItemsSource = reservations;
     }
 }

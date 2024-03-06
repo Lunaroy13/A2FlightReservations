@@ -13,7 +13,7 @@ namespace A2FlightReservations.Models
         public string Airline { get; set; }
         public string Day { get; set; }
         public string Time { get; set; }
-        public int Cost { get; set; }
+        public double Cost { get; set; }
         public string Name { get; set; }
         public string Citizenship { get; set; }
 
