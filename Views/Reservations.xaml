@@ -54,16 +54,9 @@
             <Picker x:Name="pickerReservation"
                     Title="Reservations Found"
                     FontSize="22"
-                    BackgroundColor="White">
-                <!-- This is just a placeholder information to test the - Picker tag - and how it could work once we implement functionality-->
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>View Reservations</x:String>
-                        <x:String>Testing 1</x:String>
-                        <x:String>Testing 2</x:String>
-                        <x:String>Testing 3</x:String>
-                    </x:Array>
-                </Picker.ItemsSource>
+                    BackgroundColor="White"
+                    ItemsSource="{Binding Reservations}"
+                    ItemDisplayBinding="{Binding ReservationCode}">
             </Picker>
 
         </VerticalStackLayout>
