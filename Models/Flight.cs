@@ -15,7 +15,7 @@ namespace A2FlightReservations.Models
         public string Day { get; set; }
         public string Time { get; set; }
         public int AvailableSeats { get; set; }
-        public int PricePerSeat { get; set; }
+        public double PricePerSeat { get; set; }
 
     }
 }
