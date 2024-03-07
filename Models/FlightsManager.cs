@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace A2FlightReservations.Models
 {
@@ -29,13 +30,14 @@ namespace A2FlightReservations.Models
         //given departing airport, arriving airport, and day. returns a list of flight objects that match those critiria
         public static List<Flight> SearchFlights(string departingInput, string arrivingInput, string day) {
 
-            string departingCode = "";
-
+        string departingCode = "";
+        if (departingInput != null) 
+        {
             //if the length of the departing input is 3, we assume that the user has inputted an airport code
             if (departingInput.Trim().Length == 3)
             {
                 departingCode = departingInput.Trim().ToUpper();
-                
+
             }
             //else we assume the user has inputted the name of the airport
             else
@@ -50,13 +52,16 @@ namespace A2FlightReservations.Models
                 }
 
                 //if we dont find and airport name that matches the input, search flights based on the user input
-                if(departingCode == "")
+                if (departingCode == "")
                 {
                     departingCode = departingInput.ToUpper();
                 }
             }
-
-            string arrivingCode = "";
+        }
+          
+        string arrivingCode = "";
+        if (arrivingInput != null) 
+        {
             //if the length of the arriving input is 3, we assume that the user has inputted an airport code
             if (arrivingInput.Trim().Length == 3)
             {
@@ -81,12 +86,15 @@ namespace A2FlightReservations.Models
                     arrivingCode = arrivingInput.ToUpper();
                 }
             }
+        }
+            
 
-            //Read every flight in flights, return a list of flights that have the same departing and arriving airports and same day
+            //Read every flight in flights, return a list of flights that have the same departing and/or arriving airports and/or same day
+            // For example, if the user where to enter 'Monday' all Monday flights will be displayed.
             List<Flight> validFlights = new List<Flight>();
             foreach (var flight in flights)
             {
-                if(flight.Departing == departingCode && flight.Arriving == arrivingCode && flight.Day.ToUpper() == day.ToUpper())
+                if (departingInput == null || (flight.Departing == departingCode) && (arrivingInput == null || flight.Arriving == arrivingCode) && (day == null || flight.Day.ToUpper() == day.ToUpper()))
                 {
                     validFlights.Add(flight);
                 }
