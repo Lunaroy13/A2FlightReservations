@@ -76,7 +76,6 @@ namespace A2FlightReservations.Models
             // Check that there is available space on the flight
             if (flight.AvailableSeats > 0)
             {
-                flight.AvailableSeats--;
                 newReservation = new Reservation
                 {
                     ReservationCode = GenerateReservationCode(),

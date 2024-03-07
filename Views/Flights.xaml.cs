@@ -40,6 +40,7 @@ public partial class Flights : ContentPage
         // This is the method attached to them clicking on "Reserve" after putting in the remaining details.
         Flight selectedFlight = (Flight)pickerFlight.SelectedItem;
         Reservation newReservation = ReservationManager.makeReservation(selectedFlight, entryName.Text, entryCitizenship.Text);
+        FlightsManager.bookFlight(selectedFlight);
         labelCode.Text = newReservation.ReservationCode;
     }
 
