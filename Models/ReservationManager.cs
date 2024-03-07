@@ -165,13 +165,13 @@ namespace A2FlightReservations.Models
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    int randomCharIndex = random.Next(0, allowedCharSet.Length);
-                    char selectedChar = allowedCharSet[randomCharIndex];
+                    int randomCharIndex = random.Next(0, allowedNumSet.Length);
+                    char selectedChar = allowedNumSet[randomCharIndex];
 
                     newCode += selectedChar;
                 }
-                int randomNumIndex = random.Next(0, allowedNumSet.Length);
-                char selectedNum = allowedNumSet[randomNumIndex];
+                int randomNumIndex = random.Next(0, allowedCharSet.Length);
+                char selectedNum = allowedCharSet[randomNumIndex];
                 newCode += selectedNum;
 
                 if (!reservationCodes.Contains(newCode)) 

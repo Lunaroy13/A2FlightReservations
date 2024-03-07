@@ -21,7 +21,7 @@ namespace A2FlightReservations.Models
 
         public override string ToString()
         {
-            return $"{ReservationCode}, {FlightCode}, {Airline}, {Day}, {Time}, {Cost}, {Name}";
+            return $"{ReservationCode}, {FlightCode}, {Airline}, {Day}, {Time}, {Cost}, {Name}, {Citizenship}";
         }
 
     }
