@@ -94,6 +94,33 @@ namespace A2FlightReservations.Models
             return validFlights;
         }
 
+        public static void bookFlight(Flight bookedFlight)
+        {
+            try
+            {
+                var lines = File.ReadAllLines(FLIGHT_CSV_PATH).ToList();
+
+                for (int i = 0; i < flights.Count; i++)
+                {
+                    if (flights[i] == bookedFlight)
+                    {
+                        flights[i].AvailableSeats--;
+                        string[] sLine = lines[i].Split(',');
+                        sLine[6] = flights[i].AvailableSeats.ToString();
+                        lines[i] = string.Join(',', sLine);
+                    }
+                }
+
+                File.WriteAllLines(FLIGHT_CSV_PATH, lines);
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+            }
+            
+        }
+
         //creates flight objects from csv and returns a list of all flights
         private static List<Flight> PopulateFlights()
         {
