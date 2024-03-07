@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -11,49 +12,37 @@ namespace A2FlightReservations.Models
 {
     public static class ReservationManager
     {
-        private static string RESERVATIONCSVPATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\CSVFiles\reservations.csv");
+        private static string RESERVATIONBINPATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\CSVFiles\reservations.bin");
 
         //Creates a list of flight objects from flights.csv
-        private static List<Reservation> _reservations = new List<Reservation>(PopulateReservations());
+        private static List<Reservation> _reservations = new List<Reservation>(DeserializeReservations());
 
         public static List<Reservation> GetReservations() { return _reservations; }
 
-        private static List<Reservation> PopulateReservations()
+        private static List<Reservation> DeserializeReservations()
         {
             List<Reservation> myReservations = new List<Reservation>();
-            string line;
-            try
+            
+            using (var fileStream = File.Open(RESERVATIONBINPATH, FileMode.Open))
             {
-                StreamReader sr = new StreamReader(RESERVATIONCSVPATH);
-                line = sr.ReadLine();
-                while (line != null)
+                using (var binaryReader = new BinaryReader(fileStream))
                 {
-                    string[] sLine = line.Split(',');
-                    string flightCode = sLine[0];
-                    string airline = sLine[1];
-                    string day = sLine[2];
-                    string time = sLine[3];
-                    int.TryParse(sLine[4], out int cost);
-                    string name = sLine[5];
-                    string citizenship = sLine[6];
+                    while (fileStream.Position < fileStream.Length)
+                    {
+                        Reservation newReservation = new Reservation();
 
-                    Reservation newReservation = new Reservation { 
-                        FlightCode = flightCode, 
-                        Airline = airline, 
-                        Day = day, 
-                        Time = time, 
-                        Cost = cost, 
-                        Name = name, 
-                        Citizenship = citizenship
-                    };
-                    myReservations.Add(newReservation);
-                    line = sr.ReadLine();
+                        newReservation.ReservationCode = binaryReader.ReadString();
+                        newReservation.FlightCode = binaryReader.ReadString();
+                        newReservation.Airline = binaryReader.ReadString();
+                        newReservation.Day = binaryReader.ReadString();
+                        newReservation.Time = binaryReader.ReadString();
+                        newReservation.Cost = binaryReader.ReadDouble();
+                        newReservation.Name = binaryReader.ReadString();
+                        newReservation.Citizenship = binaryReader.ReadString();
+
+                        myReservations.Add(newReservation);
+                    }
                 }
-                sr.Close();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception: " + ex.Message);
             }
             return myReservations;
 
@@ -119,15 +108,7 @@ namespace A2FlightReservations.Models
                 // Add new reservation to reservations list
                 _reservations.Add(newReservation);
 
-                try
-                {
-                    using StreamWriter sw = File.AppendText(RESERVATIONCSVPATH);
-                    sw.WriteLine(formatForFile(newReservation));
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Exception: " + ex.Message);
-                }
+                SerializeReservations(_reservations);
             }
             else
             {
@@ -141,6 +122,30 @@ namespace A2FlightReservations.Models
                 }
             }
             return newReservation;
+        }
+
+        private static void SerializeReservations(List<Reservation> reservations)
+        {
+            using (var fileStream = File.Open(RESERVATIONBINPATH,FileMode.OpenOrCreate))
+            {
+                using (var binaryWriter = new BinaryWriter(fileStream))
+                {
+
+                    foreach (var reservation in reservations)
+                    {
+                        binaryWriter.Write(reservation.ReservationCode);
+                        binaryWriter.Write(reservation.FlightCode);
+                        binaryWriter.Write(reservation.Airline);
+                        binaryWriter.Write(reservation.Day);
+                        binaryWriter.Write(reservation.Time);
+                        binaryWriter.Write(reservation.Cost);
+                        binaryWriter.Write(reservation.Name);
+                        binaryWriter.Write(reservation.Citizenship);
+                    }
+                    
+                }
+            }
+
         }
 
         private static string GenerateReservationCode()
@@ -219,21 +224,6 @@ namespace A2FlightReservations.Models
             return foundReservations;
         }
 
-        /// Overwrites csv file with current data
-        public static void persist() {
-            foreach (Reservation reservation in _reservations) {
-                try
-                {
-                    // Creates file, or overwrites all data
-                    using StreamWriter sw = File.CreateText(RESERVATIONCSVPATH);
-                    sw.WriteLine(formatForFile(reservation));
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Exception: " + ex.Message);
-                }
-            }
-        }
 
         private static string formatForFile(Reservation reservation)
         {
