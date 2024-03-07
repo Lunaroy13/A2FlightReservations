@@ -11,7 +11,6 @@ namespace A2FlightReservations.Models
 {
     public static class ReservationManager
     {
-
         private static string RESERVATIONCSVPATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\CSVFiles\reservations.csv");
 
         //Creates a list of flight objects from flights.csv
@@ -60,19 +59,48 @@ namespace A2FlightReservations.Models
 
         }
 
-        public static Reservation makeReservation(Flight flight, string name, string citizenship)
+        public static Reservation? makeReservation(Flight flight, string name, string citizenship)
         {
             Reservation newReservation;
             // Check if name is null or empty
-            if (string.IsNullOrWhiteSpace(name))
+
+            try
             {
-                throw new Exception("Error making reservation, the given name is empty");
+                if (flight == null)
+                {
+                    throw new Exception("Error making reservation, no flight was selected");
+                }
             }
+            catch
+            {
+                return null;
+            }
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    throw new Exception("Error making reservation, the given name is empty");
+                }
+            }
+            catch 
+            {
+                return null;
+            }
+
             // Check if citizenship is null or empty
-            if (string.IsNullOrWhiteSpace(citizenship))
+            try
             {
-                throw new Exception("Error making reservation, the given citizenship is empty");
+                if (string.IsNullOrWhiteSpace(citizenship))
+                {
+                    throw new Exception("Error making reservation, the given citizenship is empty");
+                }
             }
+            catch
+            {
+                return null;
+            }
+
             // Check that there is available space on the flight
             if (flight.AvailableSeats > 0)
             {
@@ -103,7 +131,14 @@ namespace A2FlightReservations.Models
             }
             else
             {
-                throw new Exception("Error making reservation, the flight is fully booked.");
+                try 
+                {
+                    throw new Exception("Error making reservation, the flight is fully booked.");
+                }
+                catch
+                {
+                    return null;
+                }
             }
             return newReservation;
         }
