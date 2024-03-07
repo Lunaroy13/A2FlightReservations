@@ -12,7 +12,7 @@ namespace A2FlightReservations.Models
 {
     public static class ReservationManager
     {
-        private static string RESERVATIONBINPATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\CSVFiles\reservations.bin");
+        private static string RESERVATIONBINPATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\Files\reservations.bin");
 
         //Creates a list of flight objects from flights.csv
         private static List<Reservation> _reservations = new List<Reservation>(DeserializeReservations());

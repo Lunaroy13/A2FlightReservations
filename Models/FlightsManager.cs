@@ -17,8 +17,8 @@ namespace A2FlightReservations.Models
     public static class FlightsManager
     {
         //relative path for flights.csv
-        public static string FLIGHT_CSV_PATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\CSVFiles\flights.csv");
-        public static string AIRPORT_CSV_PATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\CSVFiles\airports.csv");
+        public static string FLIGHT_CSV_PATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\Files\flights.csv");
+        public static string AIRPORT_CSV_PATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\Files\airports.csv");
 
         //Creates a list of flight objects from flights.csv
         static List<Flight> flights = new List<Flight>(PopulateFlights());
