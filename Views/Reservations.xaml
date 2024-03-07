@@ -55,8 +55,10 @@
                     Title="Reservations Found"
                     FontSize="22"
                     BackgroundColor="White"
-                    ItemsSource="{Binding Reservations}"
-                    ItemDisplayBinding="{Binding ReservationCode}">
+                    ItemsSource="{Binding Reservations}">
+                <Picker.ItemDisplayBinding>
+                    <Binding Path="DisplayInfo"/>
+                </Picker.ItemDisplayBinding>
             </Picker>
 
         </VerticalStackLayout>

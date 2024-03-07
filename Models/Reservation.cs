@@ -17,5 +17,12 @@ namespace A2FlightReservations.Models
         public string Name { get; set; }
         public string Citizenship { get; set; }
 
+        public string DisplayInfo => ToString();
+
+        public override string ToString()
+        {
+            return $"{ReservationCode}, {FlightCode}, {Airline}, {Day}, {Time}, {Cost}, {Name}";
+        }
+
     }
 }
