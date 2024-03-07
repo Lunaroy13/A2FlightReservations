@@ -19,7 +19,8 @@
                         <Label Text="From: " HeightRequest="30" FontSize="20"></Label>
                         <Entry x:Name="entryFrom" 
                            Placeholder="Where are you travelling from?" 
-                           WidthRequest="300"></Entry>
+                           WidthRequest="500"
+                           FontSize="20"></Entry>
                     </HorizontalStackLayout>
                 </Frame>
 
@@ -27,8 +28,9 @@
                     <HorizontalStackLayout>
                         <Label Text="To: " HeightRequest="30" FontSize="20"></Label>
                         <Entry x:Name="entryTo" 
-                                   Placeholder="Where you are travelling to?" 
-                                   WidthRequest="300"></Entry>
+                               Placeholder="Where you are travelling to?" 
+                               WidthRequest="500"
+                               FontSize="20"></Entry>
                     </HorizontalStackLayout>
                 </Frame>
 
@@ -36,8 +38,9 @@
                     <HorizontalStackLayout>
                         <Label Text="Day: " HeightRequest="30" FontSize="20"></Label>
                         <Entry x:Name="entryDay" 
-                                   Placeholder="What day would you want to travel?" 
-                                   WidthRequest="300"></Entry>
+                               Placeholder="What day would you want to travel?" 
+                               WidthRequest="500"
+                               FontSize="20"></Entry>
                     </HorizontalStackLayout>
                 </Frame>
 
@@ -56,10 +59,12 @@
             <Picker x:Name="pickerFlight"
                 SelectedIndexChanged="pickerFlight_SelectedIndexChanged"
                 Title="Available Flights"
-                ItemsSource="{Binding Flights}"
-                ItemDisplayBinding="{Binding FlightCode}"    
+                ItemsSource="{Binding Flights}"  
                 FontSize="22"
                 BackgroundColor="White">
+                <Picker.ItemDisplayBinding>
+                    <Binding Path="DisplayText"/>
+                </Picker.ItemDisplayBinding>
             </Picker>
 
 
@@ -73,7 +78,8 @@
                 <HorizontalStackLayout>
                     <Label Text="Flight code: " HeightRequest="30" FontSize="20"></Label>
                     <Label x:Name="labelFlightCode" 
-                           WidthRequest="300"></Label>
+                           WidthRequest="300"
+                           FontSize="20"></Label>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -81,7 +87,8 @@
                 <HorizontalStackLayout>
                     <Label Text="Airline: " HeightRequest="30" FontSize="20"></Label>
                     <Label x:Name="labelAirline" 
-                           WidthRequest="300"></Label>
+                           WidthRequest="300"
+                           FontSize="20"></Label>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -89,7 +96,8 @@
                 <HorizontalStackLayout>
                     <Label Text="Day: " HeightRequest="30" FontSize="20"></Label>
                     <Label x:Name="labelDay"  
-                           WidthRequest="300"></Label>
+                           WidthRequest="300"
+                           FontSize="20"></Label>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -97,7 +105,8 @@
                 <HorizontalStackLayout>
                     <Label Text="Time: " HeightRequest="30" FontSize="20"></Label>
                     <Label x:Name="labelTime" 
-                   WidthRequest="300"></Label>
+                           WidthRequest="300"
+                           FontSize="20"></Label>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -105,7 +114,8 @@
                 <HorizontalStackLayout>
                     <Label Text="Cost: " HeightRequest="30" FontSize="20"></Label>
                     <Label x:Name="labelCost" 
-                           WidthRequest="300"></Label>
+                           WidthRequest="300"
+                           FontSize="20"></Label>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -114,7 +124,8 @@
                     <Label Text="Name: " HeightRequest="30" FontSize="20"></Label>
                     <Entry x:Name="entryName"  
                            Placeholder="Enter your name"
-                           WidthRequest="300"></Entry>
+                           WidthRequest="300"
+                           FontSize="20"></Entry>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -123,7 +134,8 @@
                     <Label Text="Citizenship: " HeightRequest="30" FontSize="20"></Label>
                     <Entry x:Name="entryCitizenship" 
                            Placeholder="Enter your citizenship" 
-                           WidthRequest="300"></Entry>
+                           WidthRequest="300"
+                           FontSize="20"></Entry>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -139,7 +151,8 @@
                 <HorizontalStackLayout>
                     <Label Text="Reservation Code: " HeightRequest="30" FontSize="20"></Label>
                     <Label x:Name="labelCode"  
-                               WidthRequest="300"></Label>
+                           WidthRequest="300"
+                           FontSize="20"></Label>
                 </HorizontalStackLayout>
             </Frame>
 

@@ -16,6 +16,9 @@ namespace A2FlightReservations.Models
         public string Time { get; set; }
         public int AvailableSeats { get; set; }
         public double PricePerSeat { get; set; }
+        public string AvailableSeatsAsString => AvailableSeats.ToString();
+        public string PricePerSeatsAsString => PricePerSeat.ToString();
+        public string DisplayText => $"{FlightCode}, {Airline}, {Departing}, {Arriving}, {Day}, {Time}, {AvailableSeats}, {PricePerSeat}";
 
     }
 }
