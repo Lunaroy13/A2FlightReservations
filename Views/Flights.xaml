@@ -146,8 +146,8 @@
                     BackgroundColor="#004B75"></Button>
 
 
-            <!-- Displays the reservation code to the user, maybe a new text shows up that confirms their reservation??? -->
-            <Frame Padding="10,0,10,5">
+            <!-- Displays the reservation code to the user, maybe a new text shows up that confirms their it is hidden from the user until they reserve a flight -->
+            <Frame Padding="10,0,10,5" IsVisible="False" x:Name="reservationCodeDisplay">
                 <HorizontalStackLayout>
                     <Label Text="Reservation Code: " HeightRequest="30" FontSize="20"></Label>
                     <Label x:Name="labelCode"  
@@ -155,7 +155,13 @@
                            FontSize="20"></Label>
                 </HorizontalStackLayout>
             </Frame>
+            <!-- Confirmation Message -->
+            <Label Text="Your flight has been reserved!&#10;Visit our reservations page to view your reservation details.&#10;Thank you for using Traveless." 
+                   x:Name="confirmationMessage" HeightRequest="80" FontSize="15" TextColor="Blue" HorizontalOptions="Center" HorizontalTextAlignment="Center" IsVisible="false"></Label>
 
+            <!-- Error Messages -->
+            <Label Text="Error Message" x:Name="errorMessage" HeightRequest="40" FontSize="15" TextColor="Red" HorizontalOptions="Center" HorizontalTextAlignment="Center" IsVisible="false"></Label>
+            
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
