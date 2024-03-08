@@ -14,23 +14,30 @@ namespace A2FlightReservations.Models
     {
         private static string RESERVATIONBINPATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\Files\reservations.bin");
 
-        //Creates a list of flight objects from flights.csv
+        //Creates a list of reservation objects populated from DeserializeReservations
         private static List<Reservation> _reservations = new List<Reservation>(DeserializeReservations());
 
+        
         public static List<Reservation> GetReservations() { return _reservations; }
 
+        //Reads all reservations from reservations.bin and stores returns them in a list
         private static List<Reservation> DeserializeReservations()
         {
             List<Reservation> myReservations = new List<Reservation>();
             
+            //Create a file stream for reservations.bin
             using (var fileStream = File.Open(RESERVATIONBINPATH, FileMode.Open))
             {
+                //create a binary reader on the filestream
                 using (var binaryReader = new BinaryReader(fileStream))
                 {
+                    //while we are not at the end of the file
                     while (fileStream.Position < fileStream.Length)
                     {
+                        //create a reservation
                         Reservation newReservation = new Reservation();
 
+                        //deserialize object
                         newReservation.ReservationCode = binaryReader.ReadString();
                         newReservation.FlightCode = binaryReader.ReadString();
                         newReservation.Airline = binaryReader.ReadString();
@@ -40,10 +47,12 @@ namespace A2FlightReservations.Models
                         newReservation.Name = binaryReader.ReadString();
                         newReservation.Citizenship = binaryReader.ReadString();
 
+                        //add reservation object to list
                         myReservations.Add(newReservation);
                     }
                 }
             }
+            //return list
             return myReservations;
 
         }
