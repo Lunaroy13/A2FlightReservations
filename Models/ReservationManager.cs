@@ -1,4 +1,11 @@
-﻿using System;
+﻿// 2024-03-06
+// Group 1 -> Adam Cunard, Simon Luna, Tyler Meekel, Sunhee Ku 
+// ReservationManager.cs
+// Takes in no inputs.
+// Contains logic for reading and writing reservations
+// Also allows searching reservations based on Name and citizenship or Reservation number
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;

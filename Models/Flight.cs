@@ -1,4 +1,9 @@
-﻿using System;
+﻿// 2024-03-06
+// Group 1 -> Adam Cunard, Simon Luna, Tyler Meekel, Sunhee Ku 
+// Flight.cs
+// Takes in no inputs.
+// Class for Flight objects
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
