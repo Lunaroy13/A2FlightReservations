@@ -145,23 +145,35 @@ namespace A2FlightReservations.Models
         return validFlights;
         }
 
+        // bookFlight books a flight, and updates the CSV file data
         public static void bookFlight(Flight bookedFlight)
         {
             try
             {
+                // Read all lines from the csv file
                 var lines = File.ReadAllLines(FLIGHT_CSV_PATH).ToList();
 
+                // For each flight in the flights object
                 for (int i = 0; i < flights.Count; i++)
                 {
+                    // Find the flight that matches the booked flight
                     if (flights[i] == bookedFlight)
                     {
+                        // Book a seat
                         flights[i].AvailableSeats--;
+
+                        // Create a list of string from the matching flight in the CSV file
                         string[] sLine = lines[i].Split(',');
+
+                        // Update the line for the csv file
                         sLine[6] = flights[i].AvailableSeats.ToString();
+                        
+                        // Join the line back together and add it back to the CSV lines array
                         lines[i] = string.Join(',', sLine);
                     }
                 }
 
+                // Write the lines array to the flights csv file
                 File.WriteAllLines(FLIGHT_CSV_PATH, lines);
                 
             }
@@ -175,15 +187,26 @@ namespace A2FlightReservations.Models
         //creates flight objects from csv and returns a list of all flights
         private static List<Flight> PopulateFlights()
         {
+            // Create new empty list of flights
             List<Flight> myFlights = new List<Flight>();
+
+            // Create empty string to hold the data for each line
             string line;
             try
             {
+                // open the Flights CSV file as a stream reader
                 StreamReader sr = new StreamReader(FLIGHT_CSV_PATH);
+
+                // Read the header line
                 line = sr.ReadLine();
+
+                // While there is still information to read from the file
                 while (line != null)
                 {
+                    // Split the line by commas
                     string[] sLine = line.Split(',');
+
+                    // Add each split section to the field
                     string flightCode = sLine[0];
                     string airline = sLine[1];
                     string departing = sLine[2];
@@ -193,8 +216,13 @@ namespace A2FlightReservations.Models
                     int.TryParse(sLine[6], out int availableSeats);
                     double.TryParse(sLine[7], out double pricePerSeat);
 
+                    // create new flight object, and add each field to the object
                     Flight newFlight = new Flight {FlightCode = flightCode, Airline = airline, Departing = departing, Arriving = arriving, Day = day, Time = time, AvailableSeats = availableSeats, PricePerSeat = pricePerSeat  };
+                    
+                    // add new flight object to flights list
                     myFlights.Add(newFlight);
+
+                    // Read the next line
                     line = sr.ReadLine();
                 }
                 sr.Close();
@@ -210,20 +238,37 @@ namespace A2FlightReservations.Models
         //creates airport objects from csv and returns a list of all airports
         private static List<Airport> PopulateAirports()
         {
+            // Create empty list of airport objects
             List<Airport> myAirports = new List<Airport>();
+
+            // Create empty string
             string line;
+
             try
             {
+                // Open StreamReader for AIRPORT CSV file
                 StreamReader sr = new StreamReader(AIRPORT_CSV_PATH);
+
+                // read a line from the streamreader
                 line = sr.ReadLine();
+
+                // While there is still data to read from the CSV file
                 while (line != null)
                 {
+                    // split the line into an array of strings
                     string[] sLine = line.Split(',');
+
+                    // Create fields for each split section
                     string airportCode = sLine[0];
                     string airportName = sLine[1];
 
+                    // Create new airport object from split string
                     Airport newAirport = new Airport { Code = airportCode, AirportName = airportName }; 
+
+                    // Save to airports list
                     myAirports.Add(newAirport);
+
+                    // Read the next line
                     line = sr.ReadLine();
                 }
                 sr.Close();
