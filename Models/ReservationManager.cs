@@ -22,7 +22,7 @@ namespace A2FlightReservations.Models
         private static List<Reservation> DeserializeReservations()
         {
             List<Reservation> myReservations = new List<Reservation>();
-            
+
             using (var fileStream = File.Open(RESERVATIONBINPATH, FileMode.Open))
             {
                 using (var binaryReader = new BinaryReader(fileStream))
@@ -72,7 +72,7 @@ namespace A2FlightReservations.Models
                     throw new Exception("Error making reservation, the given name is empty");
                 }
             }
-            catch 
+            catch
             {
                 return null;
             }
@@ -112,7 +112,7 @@ namespace A2FlightReservations.Models
             }
             else
             {
-                try 
+                try
                 {
                     throw new Exception("Error making reservation, the flight is fully booked.");
                 }
@@ -126,7 +126,7 @@ namespace A2FlightReservations.Models
 
         private static void SerializeReservations(List<Reservation> reservations)
         {
-            using (var fileStream = File.Open(RESERVATIONBINPATH,FileMode.OpenOrCreate))
+            using (var fileStream = File.Open(RESERVATIONBINPATH, FileMode.OpenOrCreate))
             {
                 using (var binaryWriter = new BinaryWriter(fileStream))
                 {
@@ -142,77 +142,105 @@ namespace A2FlightReservations.Models
                         binaryWriter.Write(reservation.Name);
                         binaryWriter.Write(reservation.Citizenship);
                     }
-                    
+
                 }
             }
 
         }
 
+        // GenerateReservationCode generates a Reservation code for a Reservation following the ABCD1 format
         private static string GenerateReservationCode()
         {
+            // Create an empty string list to hold existing reservation codes
             List<string> reservationCodes = [];
 
+            // Add each existing reservation code to this list
             foreach (Reservation reservation in _reservations)
             {
                 reservationCodes.Add(reservation.ReservationCode);
             }
 
+            // Create an empty string to hold the new code
             string newCode = "";
+
+            // Create constants to hold valid characters and numbers to add to the Reservation Code
             const string VALIDCHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             const string VALIDNUM = "1234567890";
 
+            // Create arrays out of these character sets
             var allowedCharSet = VALIDCHAR.ToArray();
             var allowedNumSet = VALIDNUM.ToArray();
 
             Random random = new();
-            
+
             while (true)
             {
+                // Generate 4 letters
                 for (int i = 0; i < 4; i++)
                 {
                     int randomCharIndex = random.Next(0, allowedNumSet.Length);
                     char selectedChar = allowedNumSet[randomCharIndex];
 
+                    // Add letter to new code string
                     newCode += selectedChar;
                 }
+                
+                // Generate 1 random number
                 int randomNumIndex = random.Next(0, allowedCharSet.Length);
                 char selectedNum = allowedCharSet[randomNumIndex];
+
+                // Add number to new Reservation code
                 newCode += selectedNum;
 
-                if (!reservationCodes.Contains(newCode)) 
+                if (!reservationCodes.Contains(newCode))
                 {
+                    // If Reservation code doesn't already exist, break out of this loop.
                     break;
                 }
-            } 
+                else
+                {
+                    // If it does exist, reset the string and try again.
+                    newCode = "";
+                }
+            }
 
             return newCode;
         }
 
+        // findReservation returns a list of Reservations that match the given reservation code, airline and traveller name.
+        // Each of these fields is optional
         public static List<Reservation> findReservation(string? reservationCode, string? airline, string? travellerName)
         {
             List<Reservation> foundReservations = new List<Reservation>();
-            
-            foreach (Reservation reservation in _reservations) {
+
+            foreach (Reservation reservation in _reservations)
+            {
                 // Check if a value was given for reservationCode
-                if (!string.IsNullOrWhiteSpace(reservationCode)) {
+                if (!string.IsNullOrWhiteSpace(reservationCode))
+                {
                     // Check if reservation matches given code. Skip this reservation otherwise.
-                    if (reservationCode != reservation.ReservationCode) {
+                    if (reservationCode != reservation.ReservationCode)
+                    {
                         continue;
                     }
                 }
 
                 // Check if a value was given for airline
-                if (!string.IsNullOrWhiteSpace(airline)) {
+                if (!string.IsNullOrWhiteSpace(airline))
+                {
                     // Check if reservation airline matches given airline. Skip this reservation otherwise.
-                    if (airline != reservation.Airline) {
+                    if (airline != reservation.Airline)
+                    {
                         continue;
                     }
                 }
 
                 // Check if a value was given for travellerName
-                if (!string.IsNullOrWhiteSpace(travellerName)) {
+                if (!string.IsNullOrWhiteSpace(travellerName))
+                {
                     // Check if traveller name matches given name. Skip this reservation otherwise.
-                    if (travellerName != reservation.Name) {
+                    if (travellerName != reservation.Name)
+                    {
                         continue;
                     }
                 }
@@ -225,6 +253,7 @@ namespace A2FlightReservations.Models
         }
 
 
+        // formatForFile formats a Reservation object for adding to the Reservation CSV file.
         private static string formatForFile(Reservation reservation)
         {
             string output = "";
