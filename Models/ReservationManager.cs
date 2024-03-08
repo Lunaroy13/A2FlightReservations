@@ -14,29 +14,32 @@ namespace A2FlightReservations.Models
     {
         private static string RESERVATIONBINPATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\Files\reservations.bin");
 
-        //Creates a list of reservation objects populated from DeserializeReservations
+        //Creates a list of flight objects from reservations.csv
         private static List<Reservation> _reservations = new List<Reservation>(DeserializeReservations());
 
         
         public static List<Reservation> GetReservations() { return _reservations; }
 
-        //Reads all reservations from reservations.bin and stores returns them in a list
+        // DeserializeReservations reads the Reservation binary file and creates a list of Reservations
+        // from it.
         private static List<Reservation> DeserializeReservations()
         {
+            // Initialize new empty Reservations list
             List<Reservation> myReservations = new List<Reservation>();
 
+            // Open the Reservation binary file
             using (var fileStream = File.Open(RESERVATIONBINPATH, FileMode.Open))
             {
-                //create a binary reader on the filestream
+                // Create Binary Reader
                 using (var binaryReader = new BinaryReader(fileStream))
                 {
-                    //while we are not at the end of the file
+                    // While there is no more data to read
                     while (fileStream.Position < fileStream.Length)
                     {
-                        //create a reservation
+                        // Create new reservation
                         Reservation newReservation = new Reservation();
 
-                        //deserialize object
+                        // Read each field from the binary reader, and save it to the new reservation
                         newReservation.ReservationCode = binaryReader.ReadString();
                         newReservation.FlightCode = binaryReader.ReadString();
                         newReservation.Airline = binaryReader.ReadString();
@@ -46,7 +49,7 @@ namespace A2FlightReservations.Models
                         newReservation.Name = binaryReader.ReadString();
                         newReservation.Citizenship = binaryReader.ReadString();
 
-                        //add reservation object to list
+                        // Add new reservation to the reservations list
                         myReservations.Add(newReservation);
                     }
                 }
@@ -132,13 +135,18 @@ namespace A2FlightReservations.Models
             return newReservation;
         }
 
+        // SerializeReservations serializes each reservation in the ReservationManager and saves
+        // them to the Reservation binary file
         private static void SerializeReservations(List<Reservation> reservations)
         {
+            // Open Reservation binary file
             using (var fileStream = File.Open(RESERVATIONBINPATH, FileMode.OpenOrCreate))
             {
+                // Create BinaryWriter
                 using (var binaryWriter = new BinaryWriter(fileStream))
                 {
 
+                    // For each reservation, write each of its fields to the binary file
                     foreach (var reservation in reservations)
                     {
                         binaryWriter.Write(reservation.ReservationCode);
