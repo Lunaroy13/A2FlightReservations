@@ -276,21 +276,5 @@ namespace A2FlightReservations.Models
         }
 
 
-        // formatForFile formats a Reservation object for adding to the Reservation CSV file.
-        private static string formatForFile(Reservation reservation)
-        {
-            string output = "";
-
-            output += reservation.FlightCode + ",";
-            output += reservation.Airline + ",";
-            output += reservation.Day + ",";
-            output += reservation.Time + ",";
-            output += reservation.Cost.ToString() + ",";
-            output += reservation.Name + ",";
-            output += reservation.Citizenship;
-
-            return output;
-        }
-
     }
 }
